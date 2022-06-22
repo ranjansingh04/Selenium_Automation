@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Scenes Web Application Test Automation Regression Suite">
+
+	<listeners>
+		<listener class-name="com.scenes.qa.TestListeners.ExtentReportListener"/>
+		<!-- <listener class-name="MyTransformer"/> -->
+	</listeners>
+	
+	<test name="Scenes Web Application Test Cases">
+	
+		<classes>
+			<class name="LoginPageTest"></class>
+			<class name="HomePageTest"></class>
+			<class name="SignUpPageTest"></class>
+		</classes>
+		
+	</test>	
+</suite>
