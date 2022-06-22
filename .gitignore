@@ -1,0 +1,17 @@
+###########
+## Maven ##
+###########
+target/
+
+#############
+## Eclipse ##
+#############
+.settings/
+.classpath
+.project
+debug.log
+
+#############
+## Eclipse ##
+#############
+.idea/
