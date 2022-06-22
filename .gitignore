@@ -12,6 +12,6 @@ target/
 debug.log
 
 #############
-## Eclipse ##
+## IntelliJ ##
 #############
 .idea/
