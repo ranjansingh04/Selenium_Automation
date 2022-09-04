@@ -19,9 +19,11 @@ debug.log
 ###################
 ## Project Files ##
 ###################
-FailedTestsScreenshots/
+FailedTestsScreenshots/*
+ScenesExtentResults/*
+ScenesLoggerFiles/*
+
+#exception to the rule
 !FailedTestsScreenshots/.gitkeep
-ScenesExtentResults/
 !ScenesExtentResults/.gitkeep
-ScenesLoggerFiles/
 !ScenesLoggerFiles/.gitkeep
