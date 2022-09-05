@@ -11,7 +11,19 @@ target/
 .project
 debug.log
 
-#############
+##############
 ## IntelliJ ##
-#############
+##############
 .idea/
+
+###################
+## Project Files ##
+###################
+FailedTestsScreenshots/*
+ScenesExtentResults/*
+ScenesLoggerFiles/*
+
+#exception to the rule
+!FailedTestsScreenshots/.gitkeep
+!ScenesExtentResults/.gitkeep
+!ScenesLoggerFiles/.gitkeep

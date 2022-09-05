@@ -4,16 +4,16 @@
 <suite name="Scenes Web Application Test Automation Regression Suite">
 
 	<listeners>
-		<listener class-name="com.scenes.qa.TestListeners.ExtentReportListener"/>
+		<listener class-name="com.devzery.scenes.TestListeners.ExtentReportListener"/>
 		<!-- <listener class-name="MyTransformer"/> -->
 	</listeners>
 	
-	<test name="Scenes Web Application Test Cases">
+	<test name="Scenes Test Cases">
 	
 		<classes>
-			<class name="LoginPageTest"></class>
-			<class name="HomePageTest"></class>
-			<class name="SignUpPageTest"></class>
+			<class name="com.devzery.scenes.TestCases.SignUp.SignUpPageTest"/>
+			<class name="com.devzery.scenes.TestCases.SignUp.OnboardingApplicationPageTest"/>
+			<class name="com.devzery.scenes.TestCases.ForumPageTest"/>
 		</classes>
 		
 	</test>	
