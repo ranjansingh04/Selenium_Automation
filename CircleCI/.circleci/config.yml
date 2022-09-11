@@ -1,0 +1,115 @@
+version: 2.1
+
+orbs:
+    win: circleci/windows@5.0
+
+commands:
+  # Download and cache dependencies
+  restore_cache_cmd:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-            
+  save_cache_cmd:
+    steps:
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+  install_maven_windows_chocolatey:
+    steps:
+      - run:
+          name: Enable GlobalConfirmation for Chocolatey
+          command: |
+            choco feature enable -n allowGlobalConfirmation      
+      - run:
+          name: Maven Install through Chocolatey
+          command: |
+            choco install maven
+      - run:
+          name: Maven environment path refresh
+          command: |
+            refreshenv
+      - run:
+          name: Maven Version Installed
+          command: |
+            C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.6\bin\mvn.cmd -v
+            
+  install_chrome_windows:
+    steps:
+      - run:
+          name: Chrome Install
+          command: |
+            $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); & "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running: $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound)
+
+          
+  build_windows:
+    steps: 
+      - checkout
+      - restore_cache_cmd
+      - install_maven_windows_chocolatey
+      - install_chrome_windows
+      - run: C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.6\bin\mvn.cmd `-Dmaven.test.skip=true package
+      - save_cache_cmd
+      - run: C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.6\bin\mvn.cmd test `-PRegression
+      - store_artifacts:
+          path: target/surefire-reports
+          destination: tr1
+      - store_test_results:
+          path: target/surefire-reports
+          
+  build_linux:    
+    steps: 
+      - checkout
+      - restore_cache_cmd
+      - run: mvn -Dmaven.test.skip=true package
+      - save_cache_cmd
+      - run: mvn -PRegression
+      - store_artifacts:
+          path: target/surefire-reports
+          destination: tr1
+      - store_test_results:
+          path: target/surefire-reports
+          
+executors:
+ macos-executor:
+   macos:
+      xcode: 14.0.0
+   working_directory: ~/AutomationTesting
+   environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
+ linux-executor:
+   machine:
+     image: ubuntu-2204:2022.07.1
+   working_directory: ~/AutomationTesting
+   environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
+   
+jobs:
+  build-with-linux:
+    executor: linux-executor
+    steps:
+      - build_linux      
+      
+  build-with-windows:
+    executor: win/server-2022
+    working_directory: ~/AutomationTesting
+    environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
+    steps:
+      - build_windows      
+      
+  build-with-macos:
+    executor: macos-executor
+    steps:
+      - build_macos
+          
+workflows:
+  build-and_test_with-windows:
+   jobs:
+     - build-with-windows

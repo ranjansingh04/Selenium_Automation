@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.io.File;
 import java.util.List;
 public class SeleniumUtils extends TestBase {
     WebDriver driver;
@@ -174,5 +175,16 @@ public class SeleniumUtils extends TestBase {
         }
         catch (Exception ignored) {
         }
+    }
+
+    public void uploadFileByJavaScript(By element, String filePath) {
+        String file = filePath;
+        if (!filePath.contains(System.getProperty("user.dir")) && filePath.contains("\\"))
+            file = System.getProperty("user.dir") + File.separator + filePath;
+        WebElement obj = driver.findElement(element);
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        // Setting value for "style" attribute to make textbox visible
+        jse.executeScript("arguments[0].style.display='block';", obj);
+        driver.findElement(element).sendKeys(file);
     }
 }

@@ -74,15 +74,15 @@ public class OnboardingApplicationPageActions extends OnboardingApplicationsPage
         	}else if(seleniumUtils.isElementDisplayed(dob)) {
         		selectDateFromCalender("11-10-1990");
         		clickSubmitAnswerBtn();
-        	}else if(seleniumUtils.isElementDisplayed(uploadFile)) {
-        		String nameOfField = driver.findElement(fieldName).getText();
+        	}else if(seleniumUtils.isElementDisplayed(imageFieldName)) {
         		String filePath = "UploadFiles\\images\\sampleImg.png";
-        		if(nameOfField.contains("File")) {
-        			filePath = "UploadFiles\\Documents\\SampleDoc.pdf";
-        		}
-        		uploadImgOrDocument(filePath);
+				seleniumUtils.uploadFileByJavaScript(uploadFile, filePath);
         		clickSubmitAnswerBtn();
-        	}else if(seleniumUtils.isElementDisplayed(searchUser)) {
+        	}else if(seleniumUtils.isElementDisplayed(fileFieldName)) {
+				String filePath = "UploadFiles\\Documents\\SampleDoc.pdf";
+				seleniumUtils.uploadFileByJavaScript(uploadFile, filePath);
+				clickSubmitAnswerBtn();
+			}else if(seleniumUtils.isElementDisplayed(searchUser)) {
         		selectValueFromDropDown("Option 1");
         		clickSubmitAnswerBtn();
         	}else {

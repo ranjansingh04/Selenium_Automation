@@ -54,10 +54,10 @@ public class OnboardingApplicationPageTest extends TestBase
 		Log.info("Owner gets Login Successfully");
 		onboardingPage.clickOnSettings();
 		onboardingPage.clickOnOnboardingSettings();
+		onboardingPage.gateKeepingToggle("ON");
 		onboardingPage.clickOnApplicationFormSwitch("ON");
 		onboardingPage.addAnotherQuestion("Text Input", "What is your name ?");
 		onboardingPage.clickOnOnboardingSaveSettings();
-		onboardingPage.gateKeepingToggle("ON");
 		loginPage.logoutFromCommunityPage();
 	}
 
@@ -72,6 +72,8 @@ public class OnboardingApplicationPageTest extends TestBase
 		loginPage.enterPassword(userPwd);
 		loginPage.clickLoginButton();
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		basicProfileCreationPage.enterUserName(property.getProperty("Username"));
+		basicProfileCreationPage.clickContinue();
 		applicationPage.fillApplicationFormAndClickSubmit();
 	}
 
