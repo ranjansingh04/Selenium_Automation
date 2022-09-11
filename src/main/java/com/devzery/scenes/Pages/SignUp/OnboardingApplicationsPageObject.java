@@ -10,6 +10,8 @@ public class OnboardingApplicationsPageObject extends TestBase {
         PageFactory.initElements(driver, this);
     }
     final By fieldName = By.xpath("//div[contains(@class,'text__title') and contains(@class,'y-scroll')]");
+    final By imageFieldName = By.xpath("//p[text()='PNG, JPG up to 10MB']");
+    final By fileFieldName = By.xpath("//p[text()='PDF, DOC up to 10MB']");
     final By textField = By.xpath("//div[contains(@class,'text__title') and contains(@class,'y-scroll')]/following-sibling::*//*[contains(@class,'input card') and not(@id='date')]");
     final By numericField = By.xpath("//div[contains(@class,'text__title') and contains(@class,'y-scroll')]/following-sibling::*[contains(@class,'input card')]");
     final By dob = By.id("date");
@@ -18,7 +20,8 @@ public class OnboardingApplicationsPageObject extends TestBase {
         return By.xpath("//*[@class='flatpickr-day' and text()='"+date+"']");
     }
     final By month = By.cssSelector("[class='flatpickr-monthDropdown-months']");
-    final By uploadFile = By.cssSelector("[for='upload_step']");
+    //final By uploadFile = By.cssSelector("[for='upload_step']");
+    final By uploadFile = By.xpath("//input[@type='file']");
     final By removeFile = By.xpath("//button//*[text()='Remove File']");
     final By searchUser = By.id("searchUser");
     final By selectOption(String option) {

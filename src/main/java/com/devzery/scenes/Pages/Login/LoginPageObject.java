@@ -27,7 +27,7 @@ public class LoginPageObject extends TestBase {
     WebElement signInButton;
     private final By rememberMe = By.xpath("//input[@id='remember-me']");
     private final By forgotPasswordLink = By.xpath("//span[@class='font-semibold text__link']");
-    final By profileImageButton = By.xpath("//*[@id='headlessui-menu-button-:r45:']");
+    final By profileImageButton = By.xpath("(//button[contains(@class,'rounded flex')])[3]");
     final By logOutButton = By.xpath("//*[text()='Logout']");
     final By signUpLink = By.xpath("//button[normalize-space()='Signup']");
 }

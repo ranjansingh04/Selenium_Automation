@@ -27,14 +27,17 @@ public class OnboardingPageObject extends TestBase {
     @FindBy(xpath = "//button[text()='Save Settings']")
     WebElement onboardingSaveSettings;
 
+    @FindBy(xpath = "//div[@id='headlessui-portal-root']//button[text()='Save settings']")
+    WebElement SaveSettings;
     @FindBy(xpath = "//div[contains(@class,'mt-5 flex')]")
     WebElement addAnotherQuestionButton;
-
     public WebElement type(String questionType) {
         return driver.findElement(By.xpath("//p[text()='"+questionType+"']"));
     }
 
-    final By gateKeepingToggle = By.xpath("//span[contains(text(),'Gate Keeping')]/parent::button");
+    @FindBy(xpath = "//span[contains(text(),'Gate Keeping')]/parent::button")
+    WebElement gateKeepingToggle;
+//  final By gateKeepingToggle = By.xpath("//span[contains(text(),'Gate Keeping')]/parent::button");
 
 
 }

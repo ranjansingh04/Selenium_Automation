@@ -1,5 +1,6 @@
 package com.devzery.scenes.Pages.CommunitySettings;
 
+import com.devzery.scenes.Utilities.JavaScriptUtilities;
 import com.devzery.scenes.Utilities.SeleniumUtils;
 import com.devzery.scenes.Utilities.StaticWaits;
 import com.devzery.scenes.Utilities.TestUtility;
@@ -44,39 +45,34 @@ public class OnboardingPageActions extends OnboardingPageObject {
         else {
             Log.info("Incorrect State! Please, provide correct state");
         }
-        StaticWaits.staticShortWait();
+        StaticWaits.staticMediumWait();
     }
-
-    public void gateKeepingToggle(String toggle) {
-        TestUtility.waitUntilElementEnabled(driver, gateKeepingToggle, 20);
-        String status = driver.findElement(gateKeepingToggle).getCssValue("aria-checked").toString();
-        if(toggle.contains("enable")) {
-            if(status.contains("true")) {
-                Log.info("Already Gate Keeping toggle is enabled");
-            }else {
-                seleniumUtils.click(seleniumUtils.findElement(gateKeepingToggle));
-                Log.info("Gate Keeping toggle is enabled");
-                StaticWaits.staticShortWait();
-            }
-        }else {
-            if(status.contains("true")) {
-                seleniumUtils.click(seleniumUtils.findElement(gateKeepingToggle));
-                Log.info("Gate Keeping toggle is disabled");
-                StaticWaits.staticShortWait();
-            }else {
-                Log.info("Already Gate Keeping toggle is enabled");
-            }
+    public void gateKeepingToggle(String state)
+    {
+        String switchState = gateKeepingToggle.getAttribute("aria-checked");
+        System.out.println("Value of type attribute: "+switchState);
+        if(state.equals("ON")) {
+            if (switchState.equals("true"))
+                Log.info("GateKeeping is ON");
+            else
+                gateKeepingToggle.click();
+        } else if (state.equals("OFF")) {
+            if (switchState.equals("false"))
+                Log.info("GateKeeping is OFF");
+            else
+                gateKeepingToggle.click();
         }
-        StaticWaits.staticShortWait();
+        else {
+            Log.info("Incorrect State! Please, provide correct state");
+        }
+        StaticWaits.staticMediumWait();
     }
-
     public void clickOnOnboardingSaveSettings() {
         onboardingSaveSettings.click();
         StaticWaits.staticMediumWait();
-        seleniumUtils.acceptAlert();
+        JavaScriptUtilities.clickElementByJavaScript(SaveSettings, driver);
         StaticWaits.staticMediumWait();
     }
-
     public void addAnotherQuestion(String questionType, String question) {
         addAnotherQuestionButton.click();
         StaticWaits.staticShortWait();

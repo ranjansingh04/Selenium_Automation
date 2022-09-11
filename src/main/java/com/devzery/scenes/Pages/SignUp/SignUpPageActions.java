@@ -98,7 +98,7 @@ public class SignUpPageActions extends SignUpPageObject {
     }
 
     public void VerifyInvalidPasswordValidation(){
-        verification.verifyExists(invalidPasswordValidation);
+        verification.verifyExists(nobodyLikesTrollText);
     }
 
     public void VerifySuccessfullSignUp(){

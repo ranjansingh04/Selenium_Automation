@@ -6,7 +6,7 @@
 	<version>1.0.0</version>
 
 	<profiles>
-		<profile>
+<!---		<profile>
 			<id>Smoke</id>
 			<build>
 				<pluginManagement>
@@ -24,7 +24,7 @@
 					</plugins>
 				</pluginManagement>
 			</build>
-		</profile>
+		</profile>   -->
 
 		<profile>
 			<id>Regression</id>

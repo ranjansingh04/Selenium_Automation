@@ -16,7 +16,6 @@ public class ForumPageObject extends TestBase
 
     //    ***************PAGE OBJECTS*****************
 	@FindBy(xpath = "//*[@id='3831']")
-	@CacheLookup
 	WebElement forumChannel;
 
 	@FindBy(xpath = "(//button[text()='Add a new channel'])[1]")
@@ -82,12 +81,13 @@ public class ForumPageObject extends TestBase
 	@FindBy(xpath = "//div[text()='Add Image']")
 	WebElement forumCreatePostAddImage;
 
-    final By AddImage = By.xpath("//div[text()='Add Image']");
+//  final By AddImage = By.xpath("//div[text()='Add Image']");
+    final By AddImage = By.xpath("//input[@type='file']");
 
 	@FindBy(xpath = "//body[@id='tinymce']")
 	WebElement forumPostBody;
 
-	@FindBy(xpath = "(//*[@id='forumPostComment']")
+	@FindBy(xpath = "//*[@id='forumPostComment']")
 	WebElement forumPostCommentBody;
 
 	@FindBy(xpath = "//p[@class='text-base text__body']")

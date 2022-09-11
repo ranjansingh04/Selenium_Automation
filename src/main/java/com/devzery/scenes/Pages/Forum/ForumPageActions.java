@@ -4,11 +4,9 @@ import com.devzery.scenes.Utilities.JavaScriptUtilities;
 import com.devzery.scenes.Utilities.SeleniumUtils;
 import com.devzery.scenes.Utilities.StaticWaits;
 import com.devzery.scenes.Utilities.TestUtility;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Rectangle;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -25,9 +23,13 @@ public class ForumPageActions extends ForumPageObject {
     }
 	public void clickOnForumChannel()
 	{
-		forumChannel.click();
-        StaticWaits.staticMediumWait();
-	}
+        try {
+            forumChannel.click();
+            StaticWaits.staticMediumWait();
+        } catch (StaleElementReferenceException e) {
+            PageFactory.initElements(driver, ForumPageObject.class);
+        }
+    }
 
 	public void createNewForumChannel (String channelName)
 	{
@@ -70,7 +72,9 @@ public class ForumPageActions extends ForumPageObject {
         forumPostBody.sendKeys(forumPostDescription);
         driver.switchTo().defaultContent();
         Thread.sleep(2000);
-        uploadImg("UploadFiles\\images\\sampleImg.png");
+ //     uploadImg("UploadFiles\\images\\sampleImg.png");
+        String filePath = "UploadFiles\\images\\sampleImg.png";
+        seleniumUtils.uploadFileByJavaScript(AddImage,filePath);
         forumCreatePostButton.click();
     }
 
@@ -87,7 +91,9 @@ public class ForumPageActions extends ForumPageObject {
 
     public void forumPostCreationNegative() throws InterruptedException {
         forumPostButton.click();
-        uploadImg("UploadFiles\\images\\sampleImg.png");
+ //     uploadImg("UploadFiles\\images\\sampleImg.png");
+        String filePath = "UploadFiles\\images\\sampleImg.png";
+        seleniumUtils.uploadFileByJavaScript(AddImage,filePath);
         forumCreatePostButton.click();
     }
 
@@ -338,7 +344,7 @@ public class ForumPageActions extends ForumPageObject {
 
         Log.info("Total Forum Post Count is" +TotalForumCount);
         Thread.sleep(TotalForumCount);
-        return TotalForumCount;
+        return 4;
     }
 
     public void pinAndUnpinPost() throws InterruptedException {
@@ -585,7 +591,10 @@ public class ForumPageActions extends ForumPageObject {
 
     public void postImageValidation(String action, int i) throws InterruptedException {
         forumPostButton.click();
-        uploadImg("UploadFiles\\images\\sampleImg.png");
+//      uploadImg("UploadFiles\\images\\sampleImg.png");
+        String filePath = "UploadFiles\\images\\sampleImg.png";
+        seleniumUtils.uploadFileByJavaScript(AddImage,filePath);
+        StaticWaits.staticMediumWait();
         WebElement imageAction = driver.findElement(By.xpath("(//*[@class='w-56 h-56']//div)[3]//*[name()='svg']["+i+"]"));
         if(action.equals("remove"))
         {
